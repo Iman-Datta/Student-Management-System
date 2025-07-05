@@ -1,50 +1,35 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
-from .models import Student
+from .models import Stream
+from django.db.models import QuerySet
 
 def home(request: HttpRequest):
     if request.method == 'GET':
         msg: str = 'Welcome to Home'
         return render(request,"index.html", {'message': msg})
     
-def create(request: HttpRequest):
+def add_stream(request: HttpRequest):
     if request.method == 'POST':
-        name = request.POST['name']
-        maths = int(request.POST['maths'])
-        chemistry = int(request.POST['chem'])
-        physics = int(request.POST['physics'])
-        # We want to insert tuple inside the model Student with the help of ORM
-
-        response = Student.objects.create(name=name, maths=maths, chemistry=chemistry, physics=physics)
-        # print(f'{response}')
-        response.save()
-        return render(request,'studentapp/create.html', {'success':True, 'message':'Student added successfully'})
+        stream_name: str = request.POST['stream_name']
+        if stream_name:
+            if not Stream.objects.filter(name=stream_name).exists():
+                Stream.objects.create(name=stream_name)
+                streams: QuerySet = Stream.objects.all()
+                print(streams)
+                # List Comprehension
+                stream_data = [ 
+                    {"id": stream.id, "name": stream.name } for stream in streams
+                ]
+                return JsonResponse({"streams": stream_data})
+            else:
+                return JsonResponse({"message":"Stream already exist"}, status = 400)
+        else:
+            return JsonResponse({"message":"Stream name should be provided"}, status= 400)
     else:        
-        return render(request,'studentapp/create.html')
+        return render(request,'studentapp/add_stream.html')
 
 def retrieve(request: HttpRequest):
-    students = Student.objects.all()
+    students = Stream.objects.all()
     return render(request,"studentapp/retrieve.html", {'students': students})
 
-def delete(request: HttpRequest):
-    if request.method == 'POST':
-        Student_id = int(request.POST['student_id'])
-        student = Student.objects.get(id=Student_id)
-        student.delete()
-        return render(request, 'studentapp/delete.html', {'success': True, 'message': 'Student deleted successfully'})
-    else:
-        return render(request, 'studentapp/delete.html')
-    
-def update(request: HttpRequest):
-    if request.method == 'POST':
-        Student_id = request.POST['student_id']
-        student_name = request.POST['name']
-        student = Student.objects.get(id=Student_id, name=student_name)
-        
-        student.maths = int(request.POST['maths'])
-        student.chemistry = int(request.POST['chem'])
-        student.physics = int(request.POST['physics'])
-        student.save()
-        return render(request, 'studentapp/update.html', {'success': True, 'message': 'Student updated successfully'})
-    else:
-        return render(request, 'studentapp/update.html')
+

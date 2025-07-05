@@ -6,13 +6,8 @@ from django.db import models
 # 'makemigrations' that would create an intermediate file (000_initial.py)
 # 'migrate' that will create the table from the intermediate file
 
-class Student(models.Model):
-    name = models.CharField(max_length=100)
-    maths = models.IntegerField()
-    chemistry =  models.IntegerField()
-    physics =  models.IntegerField()
-    total = models.IntegerField()
+class Stream(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs ):
-        self.total = self.maths+self.chemistry+self.physics
-        return super().save(*args, **kwargs)
+
