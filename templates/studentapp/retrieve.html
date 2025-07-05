@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Maths</th>
+      <th scope="col">Chemistry</th>
+      <th scope="col">Physics</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+        <tr>
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.maths}}</td>
+            <td>{{student.chemistry}}</td>
+            <td>{{student.physics}}</td>
+            <td>{{student.total}}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Maths score</label>
+        <input type="number" class="form-control" id="maths" name="maths">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Chemistry</label>
+        <input type="number" class="form-control" id="chem" name="chem">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Physics score</label>
+        <input type="number" class="form-control" id="physics" name="physics">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    {% if success %}
+        {{message}}
+    {% endif %}
+
+{% endblock %}

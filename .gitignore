@@ -1,0 +1,106 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+db.sqlite3-journal
+
+# Django media / static files (optional, if generated)
+media/
+staticfiles/
+
+# If you have collectstatic output directory
+static/
+
+# Environment variables
+.env
+.env.*
+
+# VS Code & IDE config
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Python virtual environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# pip environment files (if generated)
+pip-selfcheck.json
+
+# MacOS files
+.DS_Store
+
+# Windows thumbnail cache
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# Migrations (optional if you don’t want to track them)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# MySQL/PostgreSQL dump
+*.sql
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# Unit test / test DB
+test.db
+*.sqlite3
+
+# Build files
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Celery beat schedule
+celerybeat-schedule
+
+# Logs
+*.log
+*.pid
+
+# Gunicorn
+gunicorn.pid
+
+# Docker
+*.pid
+*.tar
+*.log
+docker-compose.override.yml
+
+# Node/npm (if using frontend inside Django)
+node_modules/
+npm-debug.log
+yarn-error.log
