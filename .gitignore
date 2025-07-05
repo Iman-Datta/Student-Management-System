@@ -19,9 +19,6 @@ db.sqlite3-journal
 media/
 staticfiles/
 
-# If you have collectstatic output directory
-static/
-
 # Environment variables
 .env
 .env.*
