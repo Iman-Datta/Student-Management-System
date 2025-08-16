@@ -23,7 +23,7 @@ $(document).ready(function (){
                 $('#acknowledge').text(response.message)
                                 .css('color','green')
                                 .fadeIn().delay(2000).fadeOut();
-                $('#subjectList').html(response.subjects);
+                $('#subjectAccordion').html(response.subjects);
             },
             error: function(error){
                 const errorMessage = error.responseJSON?.message || 'An error occurred';
