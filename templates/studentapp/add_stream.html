@@ -1,16 +1,37 @@
 {% extends 'index.html' %}
+{% load static %}
+
 {% block content %}
     <form method="post">
         {% csrf_token %}
     <div class="mb-3">
         <label class="form-label">Stream Name</label>
+        <input type="hidden" id="stream_id" name="stream_id">
         <input type="text" class="form-control" id="stream_name" name="stream_name">
     </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" id="stream_description" name="stream_description" rows="3"></textarea>
+    </div>
+
     <button type="submit" class="btn btn-primary" id="btnRegister">Add</button>
     </form>
 
-    {% if success %}
-        {{message}}
-    {% endif %}
+    <div id="acknowledge"></div>
 
+    <hr>
+    <h3>Stream List</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Stream name</td>
+                <td>Description</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody id="streamList">
+            {% include 'partial/stream_rows.html' %}
+        </tbody>
+    </table>
 {% endblock %}

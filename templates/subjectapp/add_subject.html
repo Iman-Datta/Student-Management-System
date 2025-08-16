@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class = "container">
+    <div class="text-center">Subject Register</div>
+
+    <form method="post" id="subjectForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <select id="stream_id" name="stream" class="form-control">
+                <option value="">Select Stream</option>
+                {% for stream in streams %}
+                    <option value="{{stream.id}}">{{stream.name}}</option>
+                {% endfor %}
+            </select>
+        </div><br>
+        <div class="form-group">
+            <input type="hidden" id="subject_id" name="subject_id">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="subject_name" name="subject_name" required> 
+        </div><br>
+        <button id="subject_register_btn" class="btn btn-success">Save</button>
+    </form>
+    <hr>
+    <div id="acknowledge"></div>
+
+    <h2>Subject List</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Stream Name</td>
+                <td>Subject Name</td>
+            </tr>
+        </thead>
+        <tbody id="subjectList">
+            {% include "partial/subject_rows.html" %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

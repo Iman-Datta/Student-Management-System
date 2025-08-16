@@ -1,0 +1,11 @@
+{% for subject in subjects %}
+    <tr>
+        <td>{{ subject.stream.name }}</td>
+        <td>{{ subject.name }}</td>
+    </td>
+
+    {% empty %}
+    <tr>
+        <td>No Subject found </td>
+    </tr>
+{% endfor %}

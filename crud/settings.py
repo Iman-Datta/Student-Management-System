@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     # MyApps
     'studentapp.apps.StudentappConfig',
+    'subjectapp.apps.SubjectappConfig'
 ]
 
 MIDDLEWARE = [
