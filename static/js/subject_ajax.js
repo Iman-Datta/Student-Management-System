@@ -26,7 +26,7 @@ $(document).ready(function () {
           .fadeIn()
           .delay(2000)
           .fadeOut();
-        $("#subjectAccordion").html(response.subjects);
+        $("#subjectList").html(response.subjects);
       },
       error: function (error) {
         const errorMessage = error.responseJSON?.message || "An error occurred";
@@ -41,10 +41,48 @@ $(document).ready(function () {
   });
 });
 
-$(document).on("click", ".sub_edit-brn", function (event) {
-  event.preventDefault();
-  const subject_id = $(this).data("id");
-  const subject_name = $(this).data("name");
+// $(document).on("click", ".sub_edit-brn", function (event) {
+//   event.preventDefault();
+//   const subject_id = $(this).data("id");
+//   const subject_name = $(this).data("name");
 
-  
+//   console.log(`Subject ID: ${subject_id} Subject Name: ${subject_name}`);
+
+//   $("#subject_id").val(subject_id);
+//   $("#subject_name").val(subject_name);
+//   $('#subject_register_btn').text('Update');
+// });
+
+$(document).on("click", ".sub_delete-btn", function (event) {
+  event.preventDefault();
+
+  const subject_id = $(this).data("id");
+  const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
+  console.log(subject_id);
+
+  $.ajax({
+    url: `del_subject/${subject_id}/`,
+    method: "POST",
+    data: {
+      csrfmiddlewaretoken: csrfToken,
+    },
+    success: function (response) {
+      $("#acknowledge")
+        .text(response.message)
+        .css("color", "green")
+        .fadeIn()
+        .delay(2000)
+        .fadeOut();
+
+      $("#subjectList").html(response.subjects);
+    },
+    error: function (err) {
+      $("#acknowledge")
+        .text("Failed to delete the stream")
+        .css("color", "red")
+        .fadeIn()
+        .delay(2000)
+        .fadeOut();
+    },
+  });
 });

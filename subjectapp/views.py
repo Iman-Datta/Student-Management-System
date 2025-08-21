@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from studentapp.models import Stream
 from subjectapp.models import Subject
 from django.db.models.query import QuerySet
@@ -42,5 +42,14 @@ def add_subject(request: HttpRequest):
 def edit_subject(request: HttpRequest):
     pass
 
-def del_subject(request: HttpRequest):
-    pass
+def del_subject(request: HttpRequest, subject_id: int):
+    subject = get_object_or_404(Subject, pk=subject_id)
+    subject.delete()
+
+    subjects = Subject.objects.all()
+    html_subject = render_to_string("partial/subject_rows.html", {"subjects": subjects})
+    context = {
+        "subjects": html_subject,
+        "message": "Subject deleted successfully"
+    }
+    return JsonResponse(context, status=200)

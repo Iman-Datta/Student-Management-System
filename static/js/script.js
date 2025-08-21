@@ -87,7 +87,7 @@ $(document).ready(function () {
       error: function (err) {
         $("#acknowledge")
           .text("Failed to delete the stream")
-          .css("color", "green")
+          .css("color", "red")
           .fadeIn()
           .delay(2000)
           .fadeOut();
