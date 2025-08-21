@@ -2,17 +2,17 @@ from django.shortcuts import render
 from studentapp.models import Stream
 from subjectapp.models import Subject
 from django.db.models.query import QuerySet
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 
 from django.template.loader import render_to_string
 
 # Create your views here.
-def subject_list(request):
+def subject_list(request: HttpRequest):
     streams: QuerySet = Stream.objects.all()
     subjects: QuerySet = Subject.objects.select_related("stream")
     return render(request, "subjectapp/add_subject.html", {"streams" : streams, "subjects": subjects})
 
-def add_subject(request):
+def add_subject(request: HttpRequest):
     if request.method == "POST":
         stream_id = request.POST.get("stream_id")       # coming from DropDown
         subject_name = request.POST.get("subject_name")
@@ -38,5 +38,9 @@ def add_subject(request):
                 }, status=200)
             except Stream.DoesNotExist:
                 return JsonResponse({"message": "Stream not found"}, status=400)
-        
-        
+
+def edit_subject(request: HttpRequest):
+    pass
+
+def del_subject(request: HttpRequest):
+    pass

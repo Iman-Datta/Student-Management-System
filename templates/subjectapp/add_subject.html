@@ -31,42 +31,16 @@
 
   <h2>Subject List</h2>
 
-  <!-- START: Corrected Accordion Structure -->
-  <div class="accordion" id="subjectAccordion">
-    <!-- This is the outer loop that iterates through each stream -->
-    {% for stream in streams %}
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="heading-{{ stream.id }}">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapse-{{ stream.id }}"
-          aria-expanded="false"
-          aria-controls="collapse-{{ stream.id }}">
-          <strong>{{ stream.name }}</strong>
-        </button>
-      </h2>
-      <div
-        id="collapse-{{ stream.id }}"
-        class="accordion-collapse collapse"
-        aria-labelledby="heading-{{ stream.id }}"
-        data-bs-parent="#subjectAccordion">
-        <div class="accordion-body">
-          <ul class="list-group">
-            {% for subject in stream.subject_set.all %} 
-            {% include 'partial/subject_rows.html' %} {% empty %}
-            <li class="list-group-item text-muted">
-              No subjects have been added to this stream yet.
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-    <!-- FIX: This was the missing tag to close the outer stream loop -->
-  </div>
-  <!-- END: Corrected Accordion Structure -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td>Stream Name</td>
+        <td>Subject Name</td>
+      </tr>
+    </thead>
+    <tbody id="subjectList">
+      {% include "partial/subject_rows.html" %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

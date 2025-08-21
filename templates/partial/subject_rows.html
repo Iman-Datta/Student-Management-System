@@ -1,19 +1,24 @@
-<li class="list-group-item d-flex justify-content-between align-items-center">
-  {{ subject.name }}
-  <div>
+{% for subject in subjects %}
+<tr>
+  <td>{{ subject.stream.name }}</td>
+  <td>{{ subject.name }}</td>
+  <td>
     <button
-      type="button"
-      class="btn btn-warning btn-sm me-2 edit-subject-btn"
-      data-subject-id="{{ subject.id }}"
-      data-subject-name="{{ subject.name }}"
-      data-stream-id="{{ stream.id }}">
+      class="btn btn-primary sub_edit-btn"
+      data-id="{{ subject.id }}"
+      data-name="{{ subject.name }}">
       Edit
     </button>
-    <button
-      type="button"
-      class="btn btn-danger btn-sm delete-subject-btn"
-      data-subject-id="{{ subject.id }}">
+  </td>
+  <td>
+    <button class="btn btn-danger sub_delete-btn" data-id="{{ subject.id }}">
       Delete
     </button>
-  </div>
-</li>
+  </td>
+  {% empty %}
+</tr>
+
+<tr>
+  <td>No Subject found</td>
+</tr>
+{% endfor %}
