@@ -39,8 +39,22 @@ def add_subject(request: HttpRequest):
             except Stream.DoesNotExist:
                 return JsonResponse({"message": "Stream not found"}, status=400)
 
-def edit_subject(request: HttpRequest):
-    pass
+def edit_subject(request: HttpRequest, subject_id: int):
+    if request.method == 'POST':
+        subject_name = request.POST.get("subject_name")
+        if not Subject.objects.filter(name = subject_name).exclude(id = subject_id).exists():
+            subject = Subject.objects.get(id=subject_id)
+            subject.name = subject_name
+            subject.save()
+
+            subjects: QuerySet = Subject.objects.all()
+            html_subject = render_to_string("partial/subject_rows.html", {"subjects": subjects})
+            context = {
+                "subjects": html_subject,
+                "message": "Subject updated successfully"
+            }
+            return JsonResponse(context, status=200)
+            
 
 def del_subject(request: HttpRequest, subject_id: int):
     subject = get_object_or_404(Subject, pk=subject_id)

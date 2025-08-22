@@ -12,14 +12,18 @@ $(document).ready(function () {
     console.log(stream_id, "", subject_name);
 
     $.ajax({
-      url: `/subject/add_subject/`,
+      url: subject_id ? `update_subject/${subject_id}/` : `/subject/add_subject/`,   
       method: "POST",
       data: {
         stream_id: stream_id,
         subject_name: subject_name,
         csrfmiddlewaretoken: csrfToken,
       },
+
       success: function (response) {
+        $("#stream_id").val("");
+        $("#subject_name").val("");
+        $("#subject_register_btn").val("Save");
         $("#acknowledge")
           .text(response.message)
           .css("color", "green")
@@ -41,17 +45,17 @@ $(document).ready(function () {
   });
 });
 
-// $(document).on("click", ".sub_edit-brn", function (event) {
-//   event.preventDefault();
-//   const subject_id = $(this).data("id");
-//   const subject_name = $(this).data("name");
+$(document).on("click", ".sub_edit-btn", function (event) {
+  event.preventDefault();
+  const subject_id = $(this).data("id");
+  const subject_name = $(this).data("name");
 
-//   console.log(`Subject ID: ${subject_id} Subject Name: ${subject_name}`);
+  console.log(`Subject ID: ${subject_id} Subject Name: ${subject_name}`);
 
-//   $("#subject_id").val(subject_id);
-//   $("#subject_name").val(subject_name);
-//   $('#subject_register_btn').text('Update');
-// });
+  $("#subject_id").val(subject_id);
+  $("#subject_name").val(subject_name);
+  $("#subject_register_btn").text("Update");
+});
 
 $(document).on("click", ".sub_delete-btn", function (event) {
   event.preventDefault();
