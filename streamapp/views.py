@@ -37,7 +37,7 @@ def edit_stream(request: HttpRequest, id: int):
         stream_description: str = request.POST['stream_description']
         
         if not Stream.objects.filter(name=stream_name).exclude(id=id).exists():
-            stream = Stream.objects.get(id=id)
+            stream:Stream = Stream.objects.get(id=id)
             stream.name = stream_name
             stream.description = stream_description
             stream.save()

@@ -7,7 +7,7 @@ $(document).ready(function () {
     const subject_id = $("#subject_id").val();
     const stream_id = $("#stream_id").val();
     const subject_name = $("#subject_name").val();
-    const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
+    const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
 
     console.log(stream_id, "", subject_name);
 
@@ -30,7 +30,8 @@ $(document).ready(function () {
           .fadeIn()
           .delay(2000)
           .fadeOut();
-        $("#subjectList").html(response.subjects);
+        // $("#subjectList").html(response.subjects);
+        $("#subject-accordion-container").html(response.subjects);
       },
       error: function (error) {
         const errorMessage = error.responseJSON?.message || "An error occurred";

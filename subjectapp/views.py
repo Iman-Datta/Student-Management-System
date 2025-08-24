@@ -1,9 +1,8 @@
 from django.shortcuts import get_object_or_404, render
-from studentapp.models import Stream
+from streamapp.models import Stream
 from subjectapp.models import Subject
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, JsonResponse
-
 from django.template.loader import render_to_string
 
 # Create your views here.
@@ -42,8 +41,8 @@ def add_subject(request: HttpRequest):
 def edit_subject(request: HttpRequest, subject_id: int):
     if request.method == 'POST':
         subject_name = request.POST.get("subject_name")
-        if not Subject.objects.filter(name = subject_name).exclude(id = subject_id).exists():
-            subject = Subject.objects.get(id=subject_id)
+        if not Subject.objects.filter(name = subject_name).exclude(id = subject_id).exists(): # name is a property having public access specifier in the model
+            subject:Subject = Subject.objects.get(id=subject_id)
             subject.name = subject_name
             subject.save()
 
@@ -55,13 +54,16 @@ def edit_subject(request: HttpRequest, subject_id: int):
             }
             return JsonResponse(context, status=200)
             
-
 def del_subject(request: HttpRequest, subject_id: int):
-    subject = get_object_or_404(Subject, pk=subject_id)
-    subject.delete()
+    subject: Subject = get_object_or_404(Subject, pk=subject_id) # pk is a alias name of id which is an auto generated property of the model
+    if subject is None:
+        return JsonResponse({"message": "Subject not found"}, status=400)
+    else:
+        subject.delete()
 
-    subjects = Subject.objects.all()
-    html_subject = render_to_string("partial/subject_rows.html", {"subjects": subjects})
+
+    subjects: QuerySet = Subject.objects.all()
+    html_subject: str = render_to_string("partial/subject_rows.html", {"subjects": subjects})
     context = {
         "subjects": html_subject,
         "message": "Subject deleted successfully"

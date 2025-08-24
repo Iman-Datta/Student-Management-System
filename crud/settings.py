@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # MyApps
-    'studentapp.apps.StudentappConfig',
+    'streamapp.apps.streamappConfig',
     'subjectapp.apps.SubjectappConfig'
 ]
 

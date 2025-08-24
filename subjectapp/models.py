@@ -1,9 +1,9 @@
 from django.db import models
-from studentapp.models import Stream
+from streamapp.models import Stream
 
 # Create your models here.
 class Subject(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True) # name is public access specifier
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE)
     
     # get(): Search

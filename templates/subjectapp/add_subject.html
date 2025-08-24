@@ -30,17 +30,9 @@
   <div id="acknowledge"></div>
 
   <h2>Subject List</h2>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <td>Stream Name</td>
-        <td>Subject Name</td>
-      </tr>
-    </thead>
-    <tbody id="subjectList">
-      {% include "partial/subject_rows.html" %}
-    </tbody>
-  </table>
+  
+  <div id="subject-accordion-container">
+    {% include 'partial/subject_accordion.html' %}
+  </div>
 </div>
 {% endblock %}
