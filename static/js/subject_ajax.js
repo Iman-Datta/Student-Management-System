@@ -12,7 +12,9 @@ $(document).ready(function () {
     console.log(stream_id, "", subject_name);
 
     $.ajax({
-      url: subject_id ? `update_subject/${subject_id}/` : `/subject/add_subject/`,   
+      url: subject_id
+        ? `update_subject/${subject_id}/`
+        : `/subject/add_subject/`,
       method: "POST",
       data: {
         stream_id: stream_id,
@@ -30,8 +32,14 @@ $(document).ready(function () {
           .fadeIn()
           .delay(2000)
           .fadeOut();
-        // $("#subjectList").html(response.subjects);
+
         $("#subject-accordion-container").html(response.subjects);
+        var collapseElements = document.querySelectorAll(".accordion-collapse");
+        collapseElements.forEach(function (el) {
+          new bootstrap.Collapse(el, {
+            toggle: false, // This prevents them from opening automatically
+          });
+        });
       },
       error: function (error) {
         const errorMessage = error.responseJSON?.message || "An error occurred";
@@ -79,7 +87,13 @@ $(document).on("click", ".sub_delete-btn", function (event) {
         .delay(2000)
         .fadeOut();
 
-      $("#subjectList").html(response.subjects);
+      $("#subject-accordion-container").html(response.subjects);
+      var collapseElements = document.querySelectorAll(".accordion-collapse");
+      collapseElements.forEach(function (el) {
+        new bootstrap.Collapse(el, {
+          toggle: false, // This prevents them from opening automatically
+        });
+      });
     },
     error: function (err) {
       $("#acknowledge")

@@ -28,12 +28,13 @@ def add_subject(request: HttpRequest):
                     Subject.objects.create(name=subject_name, stream=stream_found)
                 
                 # select_related('foreign_key) this function will collect all the instances of the Primary Key Model in association with the Foreign Key Model
+                streams: QuerySet = Stream.objects.all()
                 subjects: QuerySet = Subject.objects.select_related("stream")
-                html_string: str = render_to_string("partial/subject_rows.html",{"subjects":subjects})
+                html_string: str = render_to_string("partial/subject_accordion.html",{"subjects":subjects, "streams": streams})
                 
                 return JsonResponse({
                     "subjects": html_string,
-                    "message": "Stream found"
+                    "message": "Stream added successfully"
                 }, status=200)
             except Stream.DoesNotExist:
                 return JsonResponse({"message": "Stream not found"}, status=400)
@@ -46,8 +47,9 @@ def edit_subject(request: HttpRequest, subject_id: int):
             subject.name = subject_name
             subject.save()
 
+            streams: QuerySet = Stream.objects.all()
             subjects: QuerySet = Subject.objects.all()
-            html_subject = render_to_string("partial/subject_rows.html", {"subjects": subjects})
+            html_subject = render_to_string("partial/subject_accordion.html", {"subjects": subjects, "streams": streams})
             context = {
                 "subjects": html_subject,
                 "message": "Subject updated successfully"
@@ -61,9 +63,9 @@ def del_subject(request: HttpRequest, subject_id: int):
     else:
         subject.delete()
 
-
-    subjects: QuerySet = Subject.objects.all()
-    html_subject: str = render_to_string("partial/subject_rows.html", {"subjects": subjects})
+    streams: QuerySet = Stream.objects.all()
+    subjects: QuerySet = Subject.objects.select_related("stream")
+    html_subject: str = render_to_string("partial/subject_accordion.html", {"subjects": subjects, "streams": streams})
     context = {
         "subjects": html_subject,
         "message": "Subject deleted successfully"
