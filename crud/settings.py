@@ -29,7 +29,8 @@ INSTALLED_APPS = [
 
     # MyApps
     'streamapp.apps.streamappConfig',
-    'subjectapp.apps.SubjectappConfig'
+    'studentapp.apps.StudentappConfig',
+    'subjectapp.apps.SubjectappConfig',
 ]
 
 MIDDLEWARE = [

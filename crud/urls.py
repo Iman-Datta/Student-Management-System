@@ -6,8 +6,8 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.home, name='_home'),
     path('stream/',include('streamapp.urls')), 
-    path('subject/',include('subjectapp.urls'))  
-   
+    path('subject/',include('subjectapp.urls')),
+    path('student/',include('studentapp.urls')),   
 ]
 
 
