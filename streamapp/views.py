@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 # Function Based View
 def stream_list(request: HttpRequest) -> HttpResponse:
     streams: QuerySet = Stream.objects.all()                    # ORM (ModelName Data Adapter which connects the ORM)
-    return render(request,'studentapp/add_stream.html',{'streams': streams})               # HttpResponse
+    return render(request,'streamapp/add_stream.html',{'streams': streams})               # HttpResponse
     
 def add_stream(request: HttpRequest):
     if request.method == 'POST':
@@ -29,7 +29,7 @@ def add_stream(request: HttpRequest):
                 "success": True,
                 "message":"Stream name should be provided"}, status= 400)
     else:        
-        return render(request,'studentapp/add_stream.html')
+        return render(request,'streamapp/add_stream.html')
 
 def edit_stream(request: HttpRequest, id: int):
     if request.method == 'POST':

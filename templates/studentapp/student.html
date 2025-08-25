@@ -1,0 +1,169 @@
+{% extends 'index.html' %} {% load static %} {% block content %}
+
+<div class="container mt-4">
+  <!-- Top Button -->
+  <div class="d-flex justify-content-end mb-4">
+    <button
+      class="btn btn-success"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#studentForm"
+      aria-expanded="false"
+      aria-controls="studentForm">
+      Add New Student
+    </button>
+  </div>
+
+  <!-- Collapsible Form -->
+  <div class="collapse" id="studentForm">
+    <div class="card card-body shadow-lg rounded p-4">
+      <h2 class="text-center mb-4">Student Registration</h2>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Personal Info -->
+        <h4>Personal Information</h4>
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter full name" />
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            placeholder="Enter age" />
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-control" id="gender" name="gender">
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="date_of_birth" class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date_of_birth"
+            name="date_of_birth" />
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea
+            class="form-control"
+            id="address"
+            name="address"
+            rows="2"
+            placeholder="Enter address"></textarea>
+        </div>
+
+        <!-- Guardian Info -->
+        <h4>Guardian Information</h4>
+        <div class="mb-3">
+          <label for="guardian_name" class="form-label">Guardian Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="guardian_name"
+            name="guardian_name"
+            placeholder="Enter guardian name" />
+        </div>
+        <div class="mb-3">
+          <label for="guardian_relation" class="form-label"
+            >Guardian Relation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="guardian_relation"
+            name="guardian_relation"
+            placeholder="Father, Mother, Uncle etc." />
+        </div>
+        <div class="mb-3">
+          <label for="guardian_contact" class="form-label"
+            >Guardian Contact</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="guardian_contact"
+            name="guardian_contact"
+            placeholder="Enter guardian contact number" />
+        </div>
+
+        <!-- Contact Info -->
+        <h4>Contact Information</h4>
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone_number"
+            name="phone_number"
+            placeholder="Enter phone number" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter email" />
+        </div>
+
+        <!-- Educational Info -->
+        <h4>Educational Information</h4>
+        <div class="mb-3">
+          <label for="stream" class="form-label">Stream</label>
+          <select class="form-control" id="stream" name="stream">
+            <option value="" disabled selected>Select Stream</option>
+            {% for stream in streams %}
+            <option value="{{ stream.id }}">{{ stream.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="section" class="form-label">Section</label>
+          <input
+            type="text"
+            class="form-control"
+            id="section"
+            name="section"
+            placeholder="Enter section (e.g. A, B)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" id="student_register_btn">
+          Register
+        </button>
+      </form>
+    </div>
+    <hr />
+  </div>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Sec. / Rollr</th>
+        <th scope="col">Stream</th>
+        <th scope="col">Opration</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'partial/student_rows.html' %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
