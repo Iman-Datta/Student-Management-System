@@ -35,7 +35,7 @@ $(document).ready(function () {
     );
 
     $.ajax({
-      url: `student/addStudent/`,
+      url: `addStudent/`,
       method: "POST",
       data: {
         student_name: student_name,
@@ -53,7 +53,40 @@ $(document).ready(function () {
         csrfmiddlewaretoken: csrfToken,
       },
 
-      success: function (response) {},
+      success: function (response) {
+        $("#name").val("");
+        $("#age").val("");
+        $("#gender").val("");
+        $("#date_of_birth").val("");
+        $("#address").val("");
+        $("#guardian_name").val("");
+        $("#guardian_relation").val("");
+        $("#guardian_contact").val("");
+        $("#phone_number").val("");
+        $("#email").val("");
+        $("#stream").val("");
+        $("#section").val("");
+        $("#student_register_btn").val("Register");
+
+        $("#acknowledge")
+          .text("Student Added Successfully")
+          .css("color", "green")
+          .fadeIn()
+          .delay(2000)
+          .fadeOut();
+
+        $("#studentlist").html(response.students);
+      },
+
+      error: function (error) {
+        const errorMessage = error.responseJSON?.message || "An error occurred";
+        $("#acknowledge")
+          .text(errorMessage)
+          .css("color", "red")
+          .fadeIn()
+          .delay(2000)
+          .fadeOut();
+      },
     });
   });
 });

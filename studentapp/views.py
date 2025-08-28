@@ -16,18 +16,22 @@ def add_student(request: HttpRequest):
         name = request.POST.get('student_name')
         age = request.POST.get('age')
         gender = request.POST.get('gender')
-        dob = request.POST.get('date_of_birth')
+        dob = request.POST.get('dob')
         address = request.POST.get('address')
         guardian_name = request.POST.get('guardian_name')
         guardian_relation = request.POST.get('guardian_relation')
         guardian_contact = request.POST.get('guardian_contact')
-        phoneNum = request.POST.get('phone_number')
+        phoneNum = request.POST.get('phone')
         email = request.POST.get('email')
-        stream = request.POST.get('stream')
+        stream_id = request.POST.get('stream')
         section = request.POST.get('section')
 
         if email:
             if not Student.objects.filter(email=email).exists():
+                try:
+                    stream_obj = Stream.objects.get(id=stream_id)  # ✅ Convert to Stream instance
+                except Stream.DoesNotExist:
+                    return JsonResponse({"message": "Invalid Stream selected"}, status=400)
                 Student.objects.create(
                     name = name,
                     age = age,
@@ -39,10 +43,10 @@ def add_student(request: HttpRequest):
                     guardian_contact = guardian_contact,
                     phone_number = phoneNum,
                     email = email,
-                    stream = stream,
+                    stream = stream_obj,
                     section = section
                 )
                 student = Student.objects.all()
-                html_student = render_to_string("partial/stream_rows.html", {"students": student})
+                html_student = render_to_string("partial/student_rows.html", {"students": student})
                 return JsonResponse({'students' : html_student})
             return JsonResponse({"message":"Student already exist"})
