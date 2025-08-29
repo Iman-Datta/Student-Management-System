@@ -19,13 +19,14 @@
     <div class="card card-body shadow-lg rounded p-4">
       <h2 class="text-center mb-4">Student Registration</h2>
 
-      <form method="post">
+      <form method="post" id="studentForm">
         {% csrf_token %}
 
         <!-- Personal Info -->
         <h4>Personal Information</h4>
         <div class="mb-3">
           <label for="name" class="form-label">Full Name</label>
+          <input type="hidden" id="student_id" name="student_id" />
           <input
             type="text"
             class="form-control"
@@ -186,18 +187,6 @@
       </div>
       <div class="modal-body" id="student-details">
         <!-- AJAX will inject student profile here -->
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-warning"
-          id="editStudentBtn"
-          data-id="{{ student.id }}">
-          Edit
-        </button>
-        <button type="submit" class="btn btn-danger" data-id="{{ student.id }}">
-          Delete
-        </button>
       </div>
     </div>
   </div>

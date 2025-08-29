@@ -5,6 +5,8 @@ $(document).ready(function () {
     e.preventDefault();
 
     console.log("AAAAAAAAA");
+
+    const student_id = $("#student_id").val();
     const student_name = $("#name").val();
     const age = $("#age").val();
     const gender = $("#gender").val();
@@ -13,7 +15,7 @@ $(document).ready(function () {
     const guardian_name = $("#guardian_name").val();
     const guardian_relation = $("#guardian_relation").val();
     const guardian_contact = $("#guardian_contact").val();
-    const phone = $("#phone_number").val();
+    const phone = $("#phone_number").val() || '';
     const email = $("#email").val();
     const stream = $("#stream").val();
     const section = $("#section").val();
@@ -35,7 +37,7 @@ $(document).ready(function () {
     );
 
     $.ajax({
-      url: `addStudent/`,
+      url: student_id ? `edit_student/${student_id}/` : `addStudent/`,
       method: "POST",
       data: {
         student_name: student_name,
@@ -46,7 +48,7 @@ $(document).ready(function () {
         guardian_name: guardian_name,
         guardian_relation: guardian_relation,
         guardian_contact: guardian_contact,
-        phone: phone,
+        phone_number: phone,
         email: email,
         stream: stream,
         section: section,
@@ -89,6 +91,7 @@ $(document).ready(function () {
       },
     });
   });
+
   $(document).on("click", ".student-profile-btn", function (event) {
     event.preventDefault();
     const studentId = $(this).data("id");
@@ -109,5 +112,54 @@ $(document).ready(function () {
         alert("Failed to load student details");
       },
     });
+  });
+
+  $(document).on("click", ".editStudentBtn", function (event) {
+    event.preventDefault();
+    console.log("Edit button clicked");
+
+    const studentModalEl = document.getElementById("studentModal");
+    const studentModal = bootstrap.Modal.getInstance(studentModalEl);
+    if (studentModal) {
+      studentModal.hide();
+    }
+
+    $("#studentForm").collapse("show");
+
+    console.log("Edit button clicked 2");
+
+    const studentId = $(this).data("id");
+    const name = $(this).data("name");
+    const age = $(this).data("age");
+    const gender = $(this).data("gender");
+    const dob = $(this).data("dob");
+    const address = $(this).data("address");
+    const guardian_name = $(this).data("guardian_name");
+    const guardian_relation = $(this).data("guardian_relation");
+    const guardian_contact = $(this).data("guardian_contact");
+    const phone_number = $(this).data("phone_number");
+    const email = $(this).data("email");
+    const stream = $(this).data("stream");
+    const roll_number = $(this).data("roll_number");
+    const section = $(this).data("section");
+
+    console.log("Edit button clicked 3");
+
+    console.log(studentId, name, age, gender, dob, address, stream, section);
+
+    $("#student_id").val(studentId);
+    $("#name").val(name);
+    $("#age").val(age);
+    $("#gender").val(gender);
+    $("#date_of_birth").val(dob);
+    $("#address").val(address);
+    $("#guardian_name").val(guardian_name);
+    $("#guardian_relation").val(guardian_relation);
+    $("#guardian_contact").val(guardian_contact);
+    $("#phone_number").val(phone_number);
+    $("#email").val(email);
+    $("#stream").val(stream);
+    $("#section").val(section);
+    $("#student_register_btn").text("Update")
   });
 });

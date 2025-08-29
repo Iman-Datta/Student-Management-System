@@ -7,9 +7,10 @@ from streamapp.models import Stream
 
 
 def student_list(request: HttpRequest):
-    students = Student.objects.all()
-    stream = Stream.objects.all()
-    return render(request, 'studentapp/student.html', {'students': students, 'streams': stream})
+    if request.method == 'GET':
+        students = Student.objects.all()
+        stream = Stream.objects.all()
+        return render(request, 'studentapp/student.html', {'students': students, 'streams': stream})
 
 def add_student(request: HttpRequest):
     if request.method == 'POST':
@@ -29,7 +30,7 @@ def add_student(request: HttpRequest):
         if email:
             if not Student.objects.filter(email=email).exists():
                 try:
-                    stream_obj = Stream.objects.get(id=stream_id)  # ✅ Convert to Stream instance
+                    stream_obj = Stream.objects.get(id=stream_id)
                 except Stream.DoesNotExist:
                     return JsonResponse({"message": "Invalid Stream selected"}, status=400)
                 Student.objects.create(
@@ -46,12 +47,41 @@ def add_student(request: HttpRequest):
                     stream = stream_obj,
                     section = section
                 )
-                student = Student.objects.all()
-                html_student = render_to_string("partial/student_rows.html", {"students": student})
-                return JsonResponse({'students' : html_student})
-            return JsonResponse({"message":"Student already exist"})
+                try:
+                    student = Student.objects.all()
+                    html_student = render_to_string("partial/student_rows.html", {"students": student})
+                    return JsonResponse({'students' : html_student})
+                except Student.DoesNotExist:
+                    return JsonResponse({"message": "Student not found"}, status = 400)
+            return JsonResponse({"message":"Student already exist"}, status = 400)
 
 def student_profile(request: HttpRequest, student_id: int):
-    student = get_object_or_404(Student, pk=student_id)
-    html_student = render_to_string("partial/student_profile.html", {"student": student})
-    return JsonResponse({'student' : html_student})
+    try:
+        student = Student.objects.get(id = student_id)
+        html_student = render_to_string("partial/student_profile.html", {"student": student})
+        return JsonResponse({'student' : html_student}, status = 200)
+    except Student.DoesNotExist:
+        return JsonResponse({"message": "Student not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"message": str(e)}, status=500)
+    
+def edit_student(request: HttpRequest, student_id: int):
+    try:
+        student: Student = Student.objects.get(id = student_id)
+        if request.method == 'POST':
+            student.address = request.POST.get("address")
+            student.guardian_name = request.POST.get("guardian_name")
+            student.guardian_relation = request.POST.get("guardian_relation")
+            student.guardian_contact = request.POST.get("guardian_contact")
+            student.phone_number = request.POST.get("phone_number")
+            student.email = request.POST.get("email")
+            student.save()
+
+            try:
+                students = Student.objects.all()
+                html_students = render_to_string("partial/student_rows.html", {"students": students})
+                return JsonResponse({'students' : html_students})
+            except Student.DoesNotExist:
+                return JsonResponse({"message": "Student not found"}, status = 400)
+    except Student.DoesNotExist:
+        return JsonResponse({"message": "Student not found"}, status = 400)

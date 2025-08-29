@@ -40,7 +40,8 @@
           <div class="col-md-12">
             <p><strong>Address:</strong> {{ student.address }}</p>
             <p>
-              <strong>Guardian:</strong> {{ student.guardian_name }} ({{ student.guardian_relation }}) </p>
+              <strong>Guardian:</strong> {{ student.guardian_name }} ({{ student.guardian_relation }})
+            </p>
             <p>
               <strong>Guardian Contact:</strong> {{ student.guardian_contact }}
             </p>
@@ -48,5 +49,31 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="text-center mt-3">
+    <button
+      type="button"
+      class="btn btn-warning editStudentBtn"
+      data-id="{{ student.id }}"
+      data-name="{{ student.name }}"
+      data-age="{{ student.age }}"
+      data-gender="{{ student.gender }}"
+      data-dob="{{ student.date_of_birth|date:'Y-m-d' }}"
+      data-address="{{ student.address }}"
+      data-guardian_name="{{ student.guardian_name }}"
+      data-guardian_relation="{{ student.guardian_relation }}"
+      data-guardian_contact="{{ student.guardian_contact }}"
+      data-phone_number="{{ student.phone_number }}"
+      data-email="{{ student.email }}"
+      data-stream="{{ student.stream.id }}"
+      data-section="{{ student.section }}">
+      Edit
+    </button>
+
+    <button type="submit" class="btn btn-danger" data-id="{{ student.id }}">
+      Delete
+    </button>
   </div>
 </div>

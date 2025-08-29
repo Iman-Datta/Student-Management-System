@@ -73,7 +73,7 @@ $(document).on("click", ".sub_delete-btn", function (event) {
   const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
   console.log(subject_id);
 
-  $.ajax({
+  $.ajax({ 
     url: `del_subject/${subject_id}/`,
     method: "POST",
     data: {
