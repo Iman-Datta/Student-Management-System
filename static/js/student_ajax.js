@@ -89,4 +89,25 @@ $(document).ready(function () {
       },
     });
   });
+  $(document).on("click", ".student-profile-btn", function (event) {
+    event.preventDefault();
+    const studentId = $(this).data("id");
+    console.log(studentId);
+
+    $.ajax({
+      url: `student_profile/${studentId}/`,
+      method: "GET",
+      success: function (response) {
+        $("#student-details").html(response.student);
+        // $("#studentModal").modal("show");
+        var myModal = new bootstrap.Modal(
+          document.getElementById("studentModal")
+        );
+        myModal.show();
+      },
+      error: function () {
+        alert("Failed to load student details");
+      },
+    });
+  });
 });

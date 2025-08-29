@@ -1,7 +1,7 @@
 import json
 from django.http import HttpRequest, JsonResponse
 from django.template.loader import render_to_string
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from studentapp.models import Student
 from streamapp.models import Stream
 
@@ -50,3 +50,8 @@ def add_student(request: HttpRequest):
                 html_student = render_to_string("partial/student_rows.html", {"students": student})
                 return JsonResponse({'students' : html_student})
             return JsonResponse({"message":"Student already exist"})
+
+def student_profile(request: HttpRequest, student_id: int):
+    student = get_object_or_404(Student, pk=student_id)
+    html_student = render_to_string("partial/student_profile.html", {"student": student})
+    return JsonResponse({'student' : html_student})

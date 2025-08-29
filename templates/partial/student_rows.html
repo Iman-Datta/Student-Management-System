@@ -7,13 +7,17 @@
     <button
       class="btn btn-primary student_marksheet-btn"
       data-id="{{ student.id }}"
-      data-name="{{ student.name }}"
-      data-description="{{ stream.description }}">
+      data-name="{{ student.name }}">
       Marks Sheet
     </button>
   </td>
   <td>
-    <button class="btn btn-danger student_profile-btn" data-id="{{ stream.id }}">
+    <button
+      type="button"
+      class="btn btn-info student-profile-btn"
+      data-bs-toggle="modal"
+      data-bs-target="#profileModal"
+      data-id="{{ student.id }}">
       Student Profile
     </button>
   </td>
