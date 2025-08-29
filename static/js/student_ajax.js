@@ -15,26 +15,11 @@ $(document).ready(function () {
     const guardian_name = $("#guardian_name").val();
     const guardian_relation = $("#guardian_relation").val();
     const guardian_contact = $("#guardian_contact").val();
-    const phone = $("#phone_number").val() || '';
+    const phone = $("#phone_number").val() || "";
     const email = $("#email").val();
     const stream = $("#stream").val();
     const section = $("#section").val();
     const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
-
-    console.log(
-      student_name,
-      age,
-      gender,
-      dob,
-      address,
-      guardian_name,
-      guardian_relation,
-      guardian_contact,
-      phone,
-      email,
-      stream,
-      section
-    );
 
     $.ajax({
       url: student_id ? `edit_student/${student_id}/` : `addStudent/`,
@@ -133,6 +118,9 @@ $(document).ready(function () {
     const age = $(this).data("age");
     const gender = $(this).data("gender");
     const dob = $(this).data("dob");
+    if (dob) {
+      dob = new Date(dob).toISOString().split("T")[0]; // "YYYY-MM-DD"
+    }
     const address = $(this).data("address");
     const guardian_name = $(this).data("guardian_name");
     const guardian_relation = $(this).data("guardian_relation");
@@ -160,6 +148,44 @@ $(document).ready(function () {
     $("#email").val(email);
     $("#stream").val(stream);
     $("#section").val(section);
-    $("#student_register_btn").text("Update")
+    $("#student_register_btn").text("Update");
+  });
+
+  $(document).on("click", ".deleteStudentBtn", function (event) {
+    event.preventDefault();
+    const studentModalEl = document.getElementById("studentModal");
+    const studentModal = bootstrap.Modal.getInstance(studentModalEl);
+    if (studentModal) {
+      studentModal.hide();
+    }
+
+    console.log("Delete button clicked");
+    const studentId = $(this).data("id");
+    const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
+
+    $.ajax({
+      url: `delete_student/${studentId}/`,
+      method: "POST",
+      data: {
+        csrfmiddlewaretoken: csrfToken,
+      },
+      success: function (response) {
+        $("#acknowledge")
+          .text("Student Deleted Successfully")
+          .css("color", "green")
+          .fadeIn()
+          .delay(2000)
+          .fadeOut();
+        $("#studentlist").html(response.students);
+      },
+      error: function (error) {
+        $("#acknowledge")
+          .text("Failed to delete the stream")
+          .css("color", "red")
+          .fadeIn()
+          .delay(2000)
+          .fadeOut();
+      },
+    });
   });
 });

@@ -22,7 +22,7 @@ def add_student(request: HttpRequest):
         guardian_name = request.POST.get('guardian_name')
         guardian_relation = request.POST.get('guardian_relation')
         guardian_contact = request.POST.get('guardian_contact')
-        phoneNum = request.POST.get('phone')
+        phoneNum = request.POST.get('phone_number')
         email = request.POST.get('email')
         stream_id = request.POST.get('stream')
         section = request.POST.get('section')
@@ -85,3 +85,20 @@ def edit_student(request: HttpRequest, student_id: int):
                 return JsonResponse({"message": "Student not found"}, status = 400)
     except Student.DoesNotExist:
         return JsonResponse({"message": "Student not found"}, status = 400)
+    
+def del_student(request: HttpRequest, student_id: int):
+    try:
+        student = Student.objects.get(id = student_id)
+        student.delete()
+        try:
+            students = Student.objects.all()
+            html_students = render_to_string("partial/student_rows.html", {"students" : students})
+            return JsonResponse({'students' : html_students})
+        except Student.DoesNotExist:
+            return JsonResponse({"message" : "No student found"})
+        except Exception as e:
+            return JsonResponse({"message" : str(e)}, status = 500)
+    except Student.DoesNotExist:
+        return JsonResponse({"message" : "No student found"})
+    except Exception as e:
+        return JsonResponse({"message" : str(e)}, status = 500)
