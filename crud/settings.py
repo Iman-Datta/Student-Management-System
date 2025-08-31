@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'streamapp.apps.streamappConfig',
     'studentapp.apps.StudentappConfig',
     'subjectapp.apps.SubjectappConfig',
+    'marksheetapp.apps.MarksheetappConfig',
 ]
 
 MIDDLEWARE = [

@@ -7,7 +7,8 @@ urlpatterns = [
     path('', views.home, name='_home'),
     path('stream/',include('streamapp.urls')), 
     path('subject/',include('subjectapp.urls')),
-    path('student/',include('studentapp.urls')),   
+    path('student/',include('studentapp.urls')),
+    path('marksheet/', include('marksheetapp.urls')),
 ]
 
 
