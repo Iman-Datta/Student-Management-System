@@ -7,7 +7,7 @@ class Student(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     gender = models.CharField(max_length=10)    
-    date_of_birth = models.DateField(null=True, blank=True)
+    # date_of_birth = models.DateField(null=True, blank=True)
     address = models.TextField()
 
     # Guardian Info

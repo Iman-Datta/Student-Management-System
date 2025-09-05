@@ -23,6 +23,7 @@ $(document).ready(function () {
       },
 
       success: function (response) {
+        $("#subject_heading").text("Subject Register");
         $("#stream_id").val("");
         $("#subject_name").val("");
         $("#subject_register_btn").val("Save");
@@ -64,6 +65,7 @@ $(document).on("click", ".sub_edit-btn", function (event) {
   $("#subject_id").val(subject_id);
   $("#subject_name").val(subject_name);
   $("#subject_register_btn").text("Update");
+  $("#subject_heading").text("Subject Update");
 });
 
 $(document).on("click", ".sub_delete-btn", function (event) {
@@ -73,7 +75,7 @@ $(document).on("click", ".sub_delete-btn", function (event) {
   const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
   console.log(subject_id);
 
-  $.ajax({ 
+  $.ajax({
     url: `del_subject/${subject_id}/`,
     method: "POST",
     data: {

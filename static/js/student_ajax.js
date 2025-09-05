@@ -10,7 +10,7 @@ $(document).ready(function () {
     const student_name = $("#name").val();
     const age = $("#age").val();
     const gender = $("#gender").val();
-    const dob = $("#date_of_birth").val();
+    // const dob = $("#date_of_birth").val();
     const address = $("#address").val();
     const guardian_name = $("#guardian_name").val();
     const guardian_relation = $("#guardian_relation").val();
@@ -28,7 +28,7 @@ $(document).ready(function () {
         student_name: student_name,
         age: age,
         gender: gender,
-        dob: dob,
+        // dob: dob,
         address: address,
         guardian_name: guardian_name,
         guardian_relation: guardian_relation,
@@ -53,10 +53,17 @@ $(document).ready(function () {
         $("#email").val("");
         $("#stream").val("");
         $("#section").val("");
-        $("#student_register_btn").val("Register");
+        $("#student_register_btn").text("Register");
+        // $("#student_heading").text("Student Register")
+        
+        const collapseEl = document.getElementById("studentFormCollapse");
+        const collapse = bootstrap.Collapse.getInstance(collapseEl);
+        if (collapse) {
+          collapse.hide();
+        }
 
         $("#acknowledge")
-          .text("Student Added Successfully")
+          .text(response.message)
           .css("color", "green")
           .fadeIn()
           .delay(2000)
@@ -109,18 +116,22 @@ $(document).ready(function () {
       studentModal.hide();
     }
 
-    $("#studentForm").collapse("show");
+    const collapseEl = document.getElementById("studentFormCollapse");
+    const collapse = new bootstrap.Collapse(collapseEl, {
+      toggle: false,
+    });
+    collapse.show();
 
     console.log("Edit button clicked 2");
 
-    const studentId = $(this).data("id");
+    let studentId = $(this).data("id");
     const name = $(this).data("name");
     const age = $(this).data("age");
     const gender = $(this).data("gender");
-    const dob = $(this).data("dob");
-    if (dob) {
-      dob = new Date(dob).toISOString().split("T")[0]; // "YYYY-MM-DD"
-    }
+    // const dob = $(this).data("dob");
+    // if (dob) {
+    // dob = new Date(dob).toISOString().split("T")[0]; // "YYYY-MM-DD"
+    // }
     const address = $(this).data("address");
     const guardian_name = $(this).data("guardian_name");
     const guardian_relation = $(this).data("guardian_relation");
@@ -133,13 +144,13 @@ $(document).ready(function () {
 
     console.log("Edit button clicked 3");
 
-    console.log(studentId, name, age, gender, dob, address, stream, section);
+    console.log(studentId, name, age, gender, address, stream, section);
 
     $("#student_id").val(studentId);
     $("#name").val(name);
     $("#age").val(age);
     $("#gender").val(gender);
-    $("#date_of_birth").val(dob);
+    // $("#date_of_birth").val(dob);
     $("#address").val(address);
     $("#guardian_name").val(guardian_name);
     $("#guardian_relation").val(guardian_relation);
@@ -149,6 +160,7 @@ $(document).ready(function () {
     $("#stream").val(stream);
     $("#section").val(section);
     $("#student_register_btn").text("Update");
+    // $("#student_heading").text("Student Profile Update")
   });
 
   $(document).on("click", ".deleteStudentBtn", function (event) {
@@ -160,7 +172,7 @@ $(document).ready(function () {
     }
 
     console.log("Delete button clicked");
-    const studentId = $(this).data("id");
+    let studentId = $(this).data("id");
     const csrfToken = $("input[name=csrfmiddlewaretoken]").val();
 
     $.ajax({

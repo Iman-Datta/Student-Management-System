@@ -17,7 +17,7 @@ def add_student(request: HttpRequest):
         name = request.POST.get('student_name')
         age = request.POST.get('age')
         gender = request.POST.get('gender')
-        dob = request.POST.get('dob')
+        # dob = request.POST.get('dob')
         address = request.POST.get('address')
         guardian_name = request.POST.get('guardian_name')
         guardian_relation = request.POST.get('guardian_relation')
@@ -37,7 +37,7 @@ def add_student(request: HttpRequest):
                     name = name,
                     age = age,
                     gender = gender,
-                    date_of_birth = dob,
+                    # date_of_birth = dob,
                     address = address,
                     guardian_name = guardian_name,
                     guardian_relation = guardian_relation,
@@ -49,8 +49,12 @@ def add_student(request: HttpRequest):
                 )
                 try:
                     student = Student.objects.all()
-                    html_student = render_to_string("partial/student_rows.html", {"students": student})
-                    return JsonResponse({'students' : html_student})
+                    html_students = render_to_string("partial/student_rows.html", {"students": student})
+                    context = {
+                        'students' : html_students,
+                        'message' : "Student Added Successfully"
+                    }
+                    return JsonResponse(context)
                 except Student.DoesNotExist:
                     return JsonResponse({"message": "Student not found"}, status = 400)
             return JsonResponse({"message":"Student already exist"}, status = 400)
@@ -80,7 +84,11 @@ def edit_student(request: HttpRequest, student_id: int):
             try:
                 students = Student.objects.all()
                 html_students = render_to_string("partial/student_rows.html", {"students": students})
-                return JsonResponse({'students' : html_students})
+                context = {
+                        'students' : html_students,
+                        'message' : "Student Updated Successfully"
+                    }
+                return JsonResponse(context)
             except Student.DoesNotExist:
                 return JsonResponse({"message": "Student not found"}, status = 400)
     except Student.DoesNotExist:

@@ -1,21 +1,22 @@
 {% extends 'index.html' %} {% load static %} {% block content %}
 
 <div class="container mt-4">
+  <!-- <h1 class="text-center" id="student_heading">Student Register</h1> -->
   <!-- Top Button -->
   <div class="d-flex justify-content-end mb-4">
     <button
       class="btn btn-success"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#studentForm"
+      data-bs-target="#studentFormCollapse"
       aria-expanded="false"
-      aria-controls="studentForm">
+      aria-controls="studentFormCollapse">
       Add New Student
     </button>
   </div>
 
   <!-- Collapsible Form -->
-  <div class="collapse" id="studentForm">
+  <div class="collapse" id="studentFormCollapse">
     <div class="card card-body shadow-lg rounded p-4">
       <h2 class="text-center mb-4">Student Registration</h2>
 
@@ -52,14 +53,14 @@
             <option value="Other">Other</option>
           </select>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="date_of_birth" class="form-label">Date of Birth</label>
           <input
             type="date"
             class="form-control"
             id="date_of_birth"
             name="date_of_birth" />
-        </div>
+        </div> -->
         <div class="mb-3">
           <label for="address" class="form-label">Address</label>
           <textarea
