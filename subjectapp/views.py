@@ -30,7 +30,7 @@ def add_subject(request: HttpRequest):
                 # select_related('foreign_key) this function will collect all the instances of the Primary Key Model in association with the Foreign Key Model
                 streams: QuerySet = Stream.objects.all()
                 subjects: QuerySet = Subject.objects.select_related("stream")
-                html_string: str = render_to_string("partial/subject_accordion.html",{"subjects":subjects, "streams": streams})
+                html_string: str = render_to_string("partial/subject_accordion.html",{"streams": streams, "subjects":subjects})
                 
                 return JsonResponse({
                     "subjects": html_string,

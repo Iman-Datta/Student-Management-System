@@ -26,7 +26,11 @@ def add_student(request: HttpRequest):
         email = request.POST.get('email')
         stream_id = request.POST.get('stream')
         section = request.POST.get('section')
-
+        profile_pic = request.FILES.get('profile_pic')
+        print(request.FILES)
+        print(" ")
+        print(profile_pic)
+        
         if email:
             if not Student.objects.filter(email=email).exists():
                 try:
@@ -45,7 +49,8 @@ def add_student(request: HttpRequest):
                     phone_number = phoneNum,
                     email = email,
                     stream = stream_obj,
-                    section = section
+                    section = section,
+                    profile_picture=profile_pic,
                 )
                 try:
                     student = Student.objects.all()

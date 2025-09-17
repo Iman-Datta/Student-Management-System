@@ -12,11 +12,7 @@
         <strong>{{ stream.name }}</strong>
       </button>
     </h2>
-    <div
-      id="collapse-{{ stream.id }}"
-      class="accordion-collapse collapse"
-      aria-labelledby="heading-{{ stream.id }}"
-      data-bs-parent="#subjectsAccordion">
+    <div id="collapse-{{ stream.id }}" class="accordion-collapse collapse">
       <div class="accordion-body">
         <ul class="list-group">
           {% for subject in subjects %} {% if subject.stream.id == stream.id %}

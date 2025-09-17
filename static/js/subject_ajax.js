@@ -21,7 +21,6 @@ $(document).ready(function () {
         subject_name: subject_name,
         csrfmiddlewaretoken: csrfToken,
       },
-
       success: function (response) {
         $("#subject_heading").text("Subject Register");
         $("#stream_id").val("");
@@ -35,12 +34,12 @@ $(document).ready(function () {
           .fadeOut();
 
         $("#subject-accordion-container").html(response.subjects);
-        var collapseElements = document.querySelectorAll(".accordion-collapse");
-        collapseElements.forEach(function (el) {
-          new bootstrap.Collapse(el, {
-            toggle: false, // This prevents them from opening automatically
-          });
-        });
+        // var collapseElements = document.querySelectorAll(".accordion-collapse");
+        // collapseElements.forEach(function (el) {
+        //   new bootstrap.Collapse(el, {
+        //     toggle: false, // This prevents them from opening automatically
+        //   });
+        // });
       },
       error: function (error) {
         const errorMessage = error.responseJSON?.message || "An error occurred";

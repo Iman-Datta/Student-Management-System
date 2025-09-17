@@ -6,7 +6,8 @@ class Student(models.Model):
     # Personal info:
     name = models.CharField(max_length=100)
     age = models.IntegerField()
-    gender = models.CharField(max_length=10)    
+    profile_picture = models.ImageField(upload_to="profile_pics/", null=True, blank=True)
+    gender = models.CharField(max_length=10)
     # date_of_birth = models.DateField(null=True, blank=True)
     address = models.TextField()
 
