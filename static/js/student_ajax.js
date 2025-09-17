@@ -7,52 +7,58 @@ $(document).ready(function () {
     console.log("AAAAAAAAA");
 
     const student_id = $("#student_id").val();
-    const student_name = $("#name").val();
-    const age = $("#age").val();
-    const gender = $("#gender").val();
-    // const dob = $("#date_of_birth").val();
-    const address = $("#address").val();
-    const guardian_name = $("#guardian_name").val();
-    const guardian_relation = $("#guardian_relation").val();
-    const guardian_contact = $("#guardian_contact").val();
-    const phone = $("#phone_number").val() || "";
-    const email = $("#email").val();
-    const stream = $("#stream").val();
-    const section = $("#section").val();
-    const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
+    // const student_name = $("#name").val();
+    // const age = $("#age").val();
+    // const gender = $("#gender").val();
+    // const address = $("#address").val();
+    // const guardian_name = $("#guardian_name").val();
+    // const guardian_relation = $("#guardian_relation").val();
+    // const guardian_contact = $("#guardian_contact").val();
+    // const phone = $("#phone_number").val() || "";
+    // const email = $("#email").val();
+    // const stream = $("#stream").val();
+    // const section = $("#section").val();
+    // const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
+    const formElement = document.getElementById("studentForm")
+    let formData = new FormData(formElement);
+    
 
     $.ajax({
       url: student_id ? `edit_student/${student_id}/` : `addStudent/`,
       method: "POST",
-      data: {
-        student_name: student_name,
-        age: age,
-        gender: gender,
-        // dob: dob,
-        address: address,
-        guardian_name: guardian_name,
-        guardian_relation: guardian_relation,
-        guardian_contact: guardian_contact,
-        phone_number: phone,
-        email: email,
-        stream: stream,
-        section: section,
-        csrfmiddlewaretoken: csrfToken,
-      },
+      data: formData,
+      processData: false,
+      contentType: false,
+      // {
+      //   student_name: student_name,
+      //   age: age,
+      //   gender: gender,
+      //   // dob: dob,
+      //   address: address,
+      //   guardian_name: guardian_name,
+      //   guardian_relation: guardian_relation,
+      //   guardian_contact: guardian_contact,
+      //   phone_number: phone,
+      //   email: email,
+      //   stream: stream,
+      //   section: section,
+      //   csrfmiddlewaretoken: csrfToken,
+      // },
 
       success: function (response) {
-        $("#name").val("");
-        $("#age").val("");
-        $("#gender").val("");
-        $("#date_of_birth").val("");
-        $("#address").val("");
-        $("#guardian_name").val("");
-        $("#guardian_relation").val("");
-        $("#guardian_contact").val("");
-        $("#phone_number").val("");
-        $("#email").val("");
-        $("#stream").val("");
-        $("#section").val("");
+        // $("#name").val("");
+        // $("#age").val("");
+        // $("#gender").val("");
+        // $("#date_of_birth").val("");
+        // $("#address").val("");
+        // $("#guardian_name").val("");
+        // $("#guardian_relation").val("");
+        // $("#guardian_contact").val("");
+        // $("#phone_number").val("");
+        // $("#email").val("");
+        // $("#stream").val("");
+        // $("#section").val("");
+        formElement.reset();
         $("#student_register_btn").text("Register");
         // $("#student_heading").text("Student Register")
         

@@ -8,7 +8,7 @@ $(document).ready(function () {
     const stream_id = $("#stream_id").val();
     const subject_name = $("#subject_name").val();
     const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
-
+    
     console.log(stream_id, "", subject_name);
 
     $.ajax({
