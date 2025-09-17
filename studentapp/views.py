@@ -84,6 +84,7 @@ def edit_student(request: HttpRequest, student_id: int):
             student.guardian_contact = request.POST.get("guardian_contact")
             student.phone_number = request.POST.get("phone_number")
             student.email = request.POST.get("email")
+            student.profile_picture = request.FILES.get('profile_pic')
             student.save()
 
             try:
