@@ -1,7 +1,7 @@
-import json
+import os
 from django.http import HttpRequest, JsonResponse
 from django.template.loader import render_to_string
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from studentapp.models import Student
 from streamapp.models import Stream
 
@@ -62,7 +62,7 @@ def add_student(request: HttpRequest):
                     return JsonResponse(context)
                 except Student.DoesNotExist:
                     return JsonResponse({"message": "Student not found"}, status = 400)
-            return JsonResponse({"message":"Student already exist"}, status = 400)
+            return JsonResponse({"message":"Student with this email already exists"}, status = 400)
 
 def student_profile(request: HttpRequest, student_id: int):
     try:
@@ -78,31 +78,42 @@ def edit_student(request: HttpRequest, student_id: int):
     try:
         student: Student = Student.objects.get(id = student_id)
         if request.method == 'POST':
-            student.address = request.POST.get("address")
-            student.guardian_name = request.POST.get("guardian_name")
-            student.guardian_relation = request.POST.get("guardian_relation")
-            student.guardian_contact = request.POST.get("guardian_contact")
-            student.phone_number = request.POST.get("phone_number")
-            student.email = request.POST.get("email")
-            student.profile_picture = request.FILES.get('profile_pic')
-            student.save()
+            new_profile_picture = request.FILES.get('profile_pic')
+            new_adress = request.POST.get('address')
+            new_gurdianPhone = request.POST.get("guardian_contact")
+            new_studentPhone = request.POST.get("phone_number")            
 
-            try:
-                students = Student.objects.all()
-                html_students = render_to_string("partial/student_rows.html", {"students": students})
-                context = {
-                        'students' : html_students,
-                        'message' : "Student Updated Successfully"
-                    }
-                return JsonResponse(context)
-            except Student.DoesNotExist:
-                return JsonResponse({"message": "Student not found"}, status = 400)
+            if new_profile_picture:
+                # We are tring to delete the exsitig file from Media
+                if student.profile_picture and os.path.isfile(student.profile_picture.path):
+                    # print(student.profile_picture.path)
+                    # print(os.path.isfile(student.profile_picture.path))
+                    os.remove(student.profile_picture.path)
+
+                    # GPT: 
+                # if student.profile_picture and default_storage.exists(student.profile_picture.name):
+                # default_storage.delete(student.profile_picture.name)
+
+                student.profile_picture = new_profile_picture
+            student.address = new_adress
+            student.guardian_contact = new_gurdianPhone
+            student.phone_number = new_studentPhone
+            student.save()
+            students = Student.objects.all()
+            html_students = render_to_string("partial/student_rows.html", {"students": students})
+            context = {
+                    'students' : html_students,
+                    'message' : "Student Updated Successfully"
+                }
+            return JsonResponse(context)
     except Student.DoesNotExist:
         return JsonResponse({"message": "Student not found"}, status = 400)
     
 def del_student(request: HttpRequest, student_id: int):
     try:
         student = Student.objects.get(id = student_id)
+        if student.profile_picture and os.path.isfile(student.profile_picture.path):
+            os.remove(student.profile_picture.path)
         student.delete()
         try:
             students = Student.objects.all()

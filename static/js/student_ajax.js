@@ -6,6 +6,9 @@ $(document).ready(function () {
 
     console.log("AAAAAAAAA");
 
+    $("#student_name").prop("disabled", false);
+    $("#email").prop("disabled", false);
+
     const student_id = $("#student_id").val();
     // const student_name = $("#name").val();
     // const age = $("#age").val();
@@ -19,9 +22,8 @@ $(document).ready(function () {
     // const stream = $("#stream").val();
     // const section = $("#section").val();
     // const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
-    const formElement = document.getElementById("studentForm")
+    const formElement = document.getElementById("studentForm");
     let formData = new FormData(formElement);
-    
 
     $.ajax({
       url: student_id ? `edit_student/${student_id}/` : `addStudent/`,
@@ -61,7 +63,7 @@ $(document).ready(function () {
         formElement.reset();
         $("#student_register_btn").text("Register");
         // $("#student_heading").text("Student Register")
-        
+
         const collapseEl = document.getElementById("studentFormCollapse");
         const collapse = bootstrap.Collapse.getInstance(collapseEl);
         if (collapse) {
@@ -116,6 +118,10 @@ $(document).ready(function () {
     event.preventDefault();
     console.log("Edit button clicked");
 
+    // Lock fields when editing
+    $("#student_name").prop("disabled", true);
+    $("#email").prop("disabled", true);
+
     const studentModalEl = document.getElementById("studentModal");
     const studentModal = bootstrap.Modal.getInstance(studentModalEl);
     if (studentModal) {
@@ -153,7 +159,7 @@ $(document).ready(function () {
     console.log(studentId, name, age, gender, address, stream, section);
 
     $("#student_id").val(studentId);
-    $("#name").val(name);
+    $("#student_name").val(name);
     $("#age").val(age);
     $("#gender").val(gender);
     // $("#date_of_birth").val(dob);
