@@ -1,21 +1,29 @@
 $(document).ready(function () {
   console.log("Student Jquery");
 
+  // $(document).on("click", ".imagePreview_row", function () {
+  //   console.log("Image clicked");
+  //   const imgSrc = $(this).attr("src"); // get the clicked image src
+  //   $("#modalImage").attr("src", imgSrc); // set it to modal image
+  // });
+
   $("#profile_pic").on("change", function (event) {
     const file = event.target.files[0];
-    console.log(event.target.files[0]);
-    const preview = $('#imagePreview');
+    const preview = $("#imagePreview");
+    const modalImg = $("#modalImage"); // <-- modal image
 
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = function (e) {
         preview.attr("src", e.target.result).show();
-      }
+        modalImg.attr("src", e.target.result); // <-- sync modal image
+      };
       reader.readAsDataURL(file);
     } else {
       preview.attr("src", "").hide();
+      modalImg.attr("src", ""); // clear modal too
     }
-  })
+  });
 
   $("#student_register_btn").click(function (e) {
     e.preventDefault();
@@ -26,18 +34,6 @@ $(document).ready(function () {
     $("#email").prop("disabled", false);
 
     const student_id = $("#student_id").val();
-    // const student_name = $("#name").val();
-    // const age = $("#age").val();
-    // const gender = $("#gender").val();
-    // const address = $("#address").val();
-    // const guardian_name = $("#guardian_name").val();
-    // const guardian_relation = $("#guardian_relation").val();
-    // const guardian_contact = $("#guardian_contact").val();
-    // const phone = $("#phone_number").val() || "";
-    // const email = $("#email").val();
-    // const stream = $("#stream").val();
-    // const section = $("#section").val();
-    // const csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // This DOM element, name is a atribute of DOM
     const formElement = document.getElementById("studentForm");
     let formData = new FormData(formElement);
 
@@ -47,38 +43,9 @@ $(document).ready(function () {
       data: formData,
       processData: false,
       contentType: false,
-      // {
-      //   student_name: student_name,
-      //   age: age,
-      //   gender: gender,
-      //   // dob: dob,
-      //   address: address,
-      //   guardian_name: guardian_name,
-      //   guardian_relation: guardian_relation,
-      //   guardian_contact: guardian_contact,
-      //   phone_number: phone,
-      //   email: email,
-      //   stream: stream,
-      //   section: section,
-      //   csrfmiddlewaretoken: csrfToken,
-      // },
-
       success: function (response) {
-        // $("#name").val("");
-        // $("#age").val("");
-        // $("#gender").val("");
-        // $("#date_of_birth").val("");
-        // $("#address").val("");
-        // $("#guardian_name").val("");
-        // $("#guardian_relation").val("");
-        // $("#guardian_contact").val("");
-        // $("#phone_number").val("");
-        // $("#email").val("");
-        // $("#stream").val("");
-        // $("#section").val("");
         formElement.reset();
         $("#student_register_btn").text("Register");
-        // $("#student_heading").text("Student Register")
 
         const collapseEl = document.getElementById("studentFormCollapse");
         const collapse = bootstrap.Collapse.getInstance(collapseEl);
@@ -156,10 +123,6 @@ $(document).ready(function () {
     const name = $(this).data("name");
     const age = $(this).data("age");
     const gender = $(this).data("gender");
-    // const dob = $(this).data("dob");
-    // if (dob) {
-    // dob = new Date(dob).toISOString().split("T")[0]; // "YYYY-MM-DD"
-    // }
     const address = $(this).data("address");
     const guardian_name = $(this).data("guardian_name");
     const guardian_relation = $(this).data("guardian_relation");
@@ -169,16 +132,16 @@ $(document).ready(function () {
     const stream = $(this).data("stream");
     const roll_number = $(this).data("roll_number");
     const section = $(this).data("section");
+    const profilePic = $(this).data("profile_pic");
 
     console.log("Edit button clicked 3");
 
-    console.log(studentId, name, age, gender, address, stream, section);
+    console.log(studentId, name, age, gender, address, stream, section, profilePic);
 
     $("#student_id").val(studentId);
     $("#student_name").val(name);
     $("#age").val(age);
     $("#gender").val(gender);
-    // $("#date_of_birth").val(dob);
     $("#address").val(address);
     $("#guardian_name").val(guardian_name);
     $("#guardian_relation").val(guardian_relation);
@@ -187,8 +150,10 @@ $(document).ready(function () {
     $("#email").val(email);
     $("#stream").val(stream);
     $("#section").val(section);
+    $("#imagePreview").attr("src", profilePic).show();
+    $("#modalImage").attr("src", profilePic).show();
+
     $("#student_register_btn").text("Update");
-    // $("#student_heading").text("Student Profile Update")
   });
 
   $(document).on("click", ".deleteStudentBtn", function (event) {

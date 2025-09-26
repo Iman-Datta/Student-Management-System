@@ -13,7 +13,7 @@
       <!-- Profile Picture -->
       <div class="col-md-4 text-center mb-3">
         <img
-          src="{% static 'images/students/default.jpeg' %}"
+          src="{{ student.profile_picture.url }}"
           alt="{{ student.name }}"
           class="img-fluid rounded-circle shadow-sm"
           style="width: 180px; height: 180px; object-fit: cover" />
@@ -68,7 +68,8 @@
       data-phone_number="{{ student.phone_number }}"
       data-email="{{ student.email }}"
       data-stream="{{ student.stream.id }}"
-      data-section="{{ student.section }}">
+      data-section="{{ student.section }}"
+      data-profile_pic="{{ student.profile_picture.url }}">
       Edit
     </button>
 

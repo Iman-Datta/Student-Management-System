@@ -16,6 +16,23 @@
       rel="stylesheet" />
   </head>
   <body>
+    <style>
+      .imagePreview {
+        width: 80px; /* fixed width */
+        height: 80px; /* fixed height */
+        object-fit: cover; /* maintain aspect ratio, crop if necessary */
+        border-radius: 50%; /* optional: make it circular */
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .imagePreview:hover {
+        border: 2px solid #0d6efd; /* Bootstrap primary color */
+        transform: scale(1.05); /* slight zoom */
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.6);
+      }
+    </style>
     {% include 'navbar.html' %}
 
     <div class="container">{% block content %} {{message}} {% endblock %}</div>

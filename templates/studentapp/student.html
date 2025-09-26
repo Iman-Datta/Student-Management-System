@@ -29,30 +29,26 @@
           <label for="name" class="form-label">Full Name</label>
           <input type="hidden" id="student_id" name="student_id" />
           <input
-            type="text"
-            class="form-control"
-            id="student_name"
-            name="student_name"
-            placeholder="Enter full name"/>
+            type="text" class="form-control" id="student_name" name="student_name" placeholder="Enter full name" />
         </div>
         <div class="mb-3">
           <label class="form-label">Profile Picture</label>
-          <input
-            type="file"
-            class="form-control profile_pic"
-            id="profile_pic"
-            name="profile_pic"
-            accept="image/*" />
-            <img id="imagePreview" src="" style="max-width: 200px; display: none;">
+          <input type="file" class="form-control profile_pic" id="profile_pic" name="profile_pic" accept="image/*" />
+          <img id="imagePreview" class="imagePreview" src="" style="max-width: 100px; display: none" data-bs-toggle="modal" data-bs-target="#previewModal" />
+        </div>
+        <!-- Image Preview Modal -->
+        <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 shadow-none">
+              <div class="modal-body text-center p-0">
+                <img id="modalImage" src="" class="img-fluid rounded" alt="Preview" />
+              </div>
+            </div>
+          </div>
         </div>
         <div class="mb-3">
           <label for="age" class="form-label">Age</label>
-          <input
-            type="number"
-            class="form-control"
-            id="age"
-            name="age"
-            placeholder="Enter age" />
+          <input type="number" class="form-control" id="age" name="age" placeholder="Enter age" />
         </div>
         <div class="mb-3">
           <label for="gender" class="form-label">Gender</label>
