@@ -1,6 +1,22 @@
 $(document).ready(function () {
   console.log("Student Jquery");
 
+  $("#profile_pic").on("change", function (event) {
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    const preview = $('#imagePreview');
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = function (e) {
+        preview.attr("src", e.target.result).show();
+      }
+      reader.readAsDataURL(file);
+    } else {
+      preview.attr("src", "").hide();
+    }
+  })
+
   $("#student_register_btn").click(function (e) {
     e.preventDefault();
 

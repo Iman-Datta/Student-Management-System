@@ -20,7 +20,7 @@
     <div class="card card-body shadow-lg rounded p-4">
       <h2 class="text-center mb-4">Student Registration</h2>
 
-      <form method="post" id="studentForm">
+      <form method="post" id="studentForm" enctype="multipart/form-data">
         {% csrf_token %}
 
         <!-- Personal Info -->
@@ -43,6 +43,7 @@
             id="profile_pic"
             name="profile_pic"
             accept="image/*" />
+            <img id="imagePreview" src="" style="max-width: 200px; display: none;">
         </div>
         <div class="mb-3">
           <label for="age" class="form-label">Age</label>
